@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itcast.mapping.SendResumeMapping">
+
+    <select id="findAll" resultType="com.itcast.pojo.SendResume">
+        select * from sendresume
+    </select>
+
+    <select id="findById" parameterType="string" resultType="com.itcast.pojo.SendResume">
+        select * from sendresume where senid=#{id}
+    </select>
+
+    <insert id="addSendresume" parameterType="com.itcast.pojo.SendResume" >
+        insert into sendresume values (#{senid},#{vipid},
+        #{resid},#{posid},#{sendtime},#{result})
+    </insert>
+    
+    <update id="updateSendresume" parameterType="com.itcast.pojo.SendResume">
+        update sendresume set vipid=#{vipid},resid=#{resid},posid=#{posid},sendtime=#{sendtime},
+        result=#{result}
+        where senid=#{senid}
+    </update>
+
+    <delete id="deleteSendresume" parameterType="string">
+        delete from sendresume where senid=#{id}
+    </delete>
+
+    <!--判断简历是否已经投递-->
+    <select id="isSend" parameterType="string" resultType="int">
+        select count(senid) from resume r,sendresume s
+        where r.resid=#{resid} and r.vipid=s.vipid and r.resid=s.resid and s.posid=#{posid}
+    </select>
+
+    <!--修改面试结果-->
+    <update id="updateResult" parameterType="string">
+        update sendresume set result=#{result}
+        where senid=#{senid}
+    </update>
+
+    <!--得到职位招聘的人数-->
+    <select id="getPosNum" parameterType="string" resultType="int">
+        select count(senid) from sendresume where posid=#{posid}
+    </select>
+
+</mapper>

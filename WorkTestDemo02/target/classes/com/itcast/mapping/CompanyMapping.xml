@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itcast.mapping.CompanyMapping">
+
+    <select id="findAll" resultType="com.itcast.pojo.Company">
+        select * from company
+    </select>
+
+    <select id="findById" parameterType="string" resultType="com.itcast.pojo.Company">
+        select * from company where comid=#{id}
+    </select>
+
+    <insert id="addCompany" parameterType="com.itcast.pojo.Company" >
+        insert into company values (#{comid},#{comname},
+        #{commodel},#{address},#{industry})
+    </insert>
+    
+    <update id="updateCompany" parameterType="com.itcast.pojo.Company">
+        update company set comname=#{comname},commodel=#{commodel},address=#{address},industry=#{industry}
+        where comid=#{comid}
+    </update>
+
+    <delete id="deleteCompany" parameterType="string">
+        delete from company where comid=#{id}
+    </delete>
+
+
+    <resultMap id="OneToOne" type="com.itcast.pojo.Vip">
+        <id property="vipid" column="vipid"></id>
+        <result property="phone" column="phone"/>
+        <result property="vipname" column="vipname"/>
+        <result property="worktime" column="worktime"/>
+        <association property="resume" javaType="com.itcast.pojo.Resume">
+            <id property="resid" column="resid"/>
+            <result property="vipid" column="vipid"></result>
+            <result property="evaluate" column="evaluate"/>
+            <result property="iswork" column="iswork"/>
+            <result property="jobintention" column="jobintention"/>
+            <result property="salary" column="salary"/>
+        </association>
+    </resultMap>
+
+    <select id="getVipAndResume" parameterType="string" resultMap="OneToOne">
+        select v.*,r.* from position p,company c,resume r,sendresume s,vip v
+        where comname=#{comname} and c.comid=p.comid and p.posname=#{posname}
+        and p.posid=s.posid and s.vipid=v.vipid and s.resid=r.resid
+    </select>
+
+</mapper>

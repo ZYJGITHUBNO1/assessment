@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itcast.mapping.VipMapping">
+
+    <select id="findAll" resultType="com.itcast.pojo.Vip">
+        select * from vip
+    </select>
+
+    <select id="findById" parameterType="string" resultType="com.itcast.pojo.Vip">
+        select * from vip where vipid=#{id}
+    </select>
+
+    <insert id="addVip" parameterType="com.itcast.pojo.Vip" >
+        insert into vip values (#{vipid},#{vipname},
+        #{phone},#{worktime})
+    </insert>
+
+    <update id="updateVip" parameterType="com.itcast.pojo.Vip">
+        update vip set vipname=#{vipname},phone=#{phone},worktime=#{worktime} where vipid=#{vipid}
+    </update>
+
+    <delete id="deleteVip" parameterType="string">
+        delete from vip where vipid=#{id}
+    </delete>
+
+    <select id="upload" resultType="com.itcast.pojo.UploadVip">
+        select * from (select v.* from vip v,resume r where v.vipid=r.vipid) temp LEFT JOIN  (select r.vipid as rvipid,c.* from resume r,sendresume s,position p,company c where r.iswork='1' and r.resid=s.resid and p.posid=s.posid and c.comid=p.comid) temp2 on temp.vipid=temp2.rvipid
+    </select>
+
+</mapper>

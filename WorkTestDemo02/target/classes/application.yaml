@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    url: jdbc:mysql:///assessment?serverTimezone=UTC   #serverTimezone=UTC  时区为UTC
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    password: root
+
+
+server:
+  port: 8082
+
+#pagehelper:
+#  helperDialect: oracle
+#  reasonable: true
+#  supportMethodsArguments: true
+#  params: count=countSql

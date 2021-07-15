@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itcast.mapping.ResumeMapping">
+
+    <select id="findAll" resultType="com.itcast.pojo.Resume">
+        select * from resume
+    </select>
+
+    <select id="findById" parameterType="string" resultType="com.itcast.pojo.Resume">
+        select * from resume where resid=#{id}
+    </select>
+
+    <insert id="addResume" parameterType="com.itcast.pojo.Resume" >
+        insert into resume values (#{resid},#{vipid},
+        #{jobintention},#{salary},#{iswork},#{evaluate})
+    </insert>
+    
+    <update id="updateResume" parameterType="com.itcast.pojo.Resume">
+        update resume set vipid=#{vipid},jobintention=#{jobintention},salary=#{salary},iswork=#{iswork},
+        evaluate=#{evaluate}
+        where resid=#{resid}
+    </update>
+
+    <delete id="deleteResume" parameterType="string">
+        delete from resume where resid=#{id}
+    </delete>
+
+    <!--获取简历的会员号-->
+    <select id="getVipId" parameterType="string" resultType="string">
+        select vipid from resume where resid=#{resid}
+    </select>
+
+</mapper>

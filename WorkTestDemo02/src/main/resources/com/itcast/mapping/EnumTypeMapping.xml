@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.itcast.mapping.EnumTypeMapping">
+
+    <select id="findAll" resultType="com.itcast.pojo.EnumType">
+        select * from enumType
+    </select>
+
+    <select id="findById" parameterType="string" resultType="com.itcast.pojo.EnumType">
+        select * from enumType where enumno=#{id}
+    </select>
+    
+    <insert id="addEnumType" parameterType="com.itcast.pojo.EnumType" >
+        insert into enumType values (#{enumno},#{enumtxt})
+    </insert>
+    
+    <update id="updateEnumType" parameterType="com.itcast.pojo.EnumType">
+        update enumType set enumtxt=#{enumtxt}
+        where enumno=#{enumno}
+    </update>
+
+    <delete id="deleteEnumType" parameterType="string">
+        delete from enumType where enumno=#{id}
+    </delete>
+
+</mapper>
